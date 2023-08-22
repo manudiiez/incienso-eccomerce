@@ -10,7 +10,7 @@ const ShopListContainer = () => {
     const [search, setSearch] = useState('');
     const [page, setPage] = useState(1);
 
-    const { data, loading, reFetch } = useFetch(`http://localhost:8080/api/products?category=${category}&search=${search}&page=${page}`);
+    const { data, loading, reFetch } = useFetch(`http://localhost:3000/api/products?category=${category}&search=${search}&page=${page}`);
 
 
     const changeCatergory = (value) => {

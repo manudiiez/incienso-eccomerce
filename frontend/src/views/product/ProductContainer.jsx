@@ -2,39 +2,49 @@ import React, { useContext, useState } from 'react'
 import { styled } from 'styled-components'
 import Title from '../../components/title/Title'
 import { Text } from '../../styles/global';
-import axios from 'axios';
 import { CartContext } from '../../context/CartContext';
 import ButtonCant from '../../components/buttonCant/ButtonCant';
+import Swal from 'sweetalert2'
+import { useNavigate } from 'react-router-dom';
 
-
-const ProductContainer = ({data}) => {
+const ProductContainer = ({ data }) => {
 
     const [cant, setCant] = useState(1);
     const { loading, error, dispatch } = useContext(CartContext);
-    const { cart} = useContext(CartContext)
+    const { cart } = useContext(CartContext)
+    const navigate = useNavigate()
+
 
     const addCant = () => {
-        setCant(cant+1)
+        setCant(cant + 1)
     }
     const restCant = () => {
-        if(cant >1){
-            setCant(cant-1)
+        if (cant > 1) {
+            setCant(cant - 1)
         }
     }
 
-    const addCart = async() => {
+    const addCart = async () => {
         try {
-            dispatch({type: "ADD_CART", data: {...data, cant: cant}})
+            dispatch({ type: "ADD_CART", data: { ...data, cant: cant } })
+            await Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Producto agregado al carrito',
+                showConfirmButton: false,
+                timer: 1500
+            })
+            navigate('/')
         } catch (error) {
-           console.log(error); 
+            console.log(error);
         }
     }
 
 
 
 
-    const getData = async() => {
-        dispatch({type: "GET_CART"})
+    const getData = async () => {
+        dispatch({ type: "GET_CART" })
         console.log(cart);
 
     }
@@ -42,22 +52,17 @@ const ProductContainer = ({data}) => {
     return (
         <Container>
             <div onClick={getData} className="img">
-                <img src={data.imagen} alt="" />
+                <img src={data.image?.secure_url} alt="" />
             </div>
             <div className="content">
                 <div className="title">
-                    <Title width={60} font='2rem' fontpc='3rem' text={data.nombre}  />
+                    <Title width={60} font='2rem' fontpc='3rem' text={data.name} />
                 </div>
-                <img src={data.imagen} alt="" />
-                <h3>{data.descripcion}</h3>
+                <img src={data.image?.secure_url} alt="" />
+                <h3>{data.description}</h3>
                 <div className='actions'>
-                    {/* <div>
-                        <button onClick={restCant}>-</button>
-                        <p>{cant}</p>
-                        <button onClick={addCant}>+</button>
-                    </div> */}
-                    <ButtonCant addCant={addCant} restCant={restCant} cant={cant}/>
-                    <p>{data.precio}$</p>
+                    <ButtonCant addCant={addCant} restCant={restCant} cant={cant} />
+                    <p>{data.price}$</p>
 
                 </div>
 
@@ -166,6 +171,11 @@ const Container = styled.div`
             width: 100%;
             height: 450px;
             background-color: blue;
+            img{
+                width: 100%;
+                height: 450px;
+                object-fit: cover;
+            }
         }
         
         .content{
@@ -175,6 +185,10 @@ const Container = styled.div`
 
             img{
                 display: none;
+            }
+
+            h3{
+                width: 100%;
             }
 
             .actions{

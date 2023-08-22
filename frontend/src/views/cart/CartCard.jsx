@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { styled } from 'styled-components'
 import ButtonCant from '../../components/buttonCant/ButtonCant';
 import { Text } from '../../styles/global';
-import img from '../../assets/logo.svg'
 
 const CartCard = ({ data, dispatch }) => {
 
@@ -17,15 +16,15 @@ const CartCard = ({ data, dispatch }) => {
     return (
         <Container>
             <div className='img'>
-                <img src={data.imagen} alt="" />
+                <img src={data.image.secure_url} alt="" />
                 <div>
-                    <h4>{data.nombre}</h4>
-                    <h5>{data.categoria}</h5>
+                    <h4>{data.name}</h4>
+                    <h5>{data.category}</h5>
                 </div>
             </div>
             <div className="text">
                 <ButtonCant addCant={addCant} restCant={restCant} cant={data.cant} />
-                <p className='price'>{data.precio * data.cant}$</p>
+                <p className='price'>{data.price * data.cant}$</p>
             </div>
         </Container>
     )

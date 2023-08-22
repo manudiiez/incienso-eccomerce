@@ -16,7 +16,7 @@ const CartView = () => {
             <div className="container">
                 <CartHeader cant={cart.length} />
                 <CartList data={cart} dispatch={dispatch}/>
-                <CardFooter data={cart}/>
+                <CardFooter data={cart} dispatch={dispatch}/>
             </div>
         </Container>
     )

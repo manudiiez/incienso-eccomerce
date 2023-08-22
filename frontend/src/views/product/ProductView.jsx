@@ -7,7 +7,7 @@ import ProductContainer from './ProductContainer';
 
 const ProductView = () => {
     let { id } = useParams();
-    const { data, loading, reFetch } = useFetch(`http://localhost:8080/api/products/${id}`);
+    const { data, loading, reFetch } = useFetch(`http://localhost:3000/api/products/${id}`);
 
     
 
@@ -31,4 +31,14 @@ const ProductView = () => {
 export default ProductView
 
 
-const Container = styled.section``
+const Container = styled.section`
+
+    .loading{
+        width: 100%;
+        height: 90vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+`

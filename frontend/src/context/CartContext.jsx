@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useReducer } from "react";
-
+import axios from 'axios';
 
 const INITIAL_STATE = {
     cart: JSON.parse(localStorage.getItem("cart")) || [],
@@ -35,22 +35,29 @@ const CartReducer = (state, action) => {
             };
         case "ADD_ONE_CART":
             const index3 = searchItem(action.data, cart)
-            cart[index3].cant = cart[index3].cant + 1 
+            cart[index3].cant = cart[index3].cant + 1
             return {
                 cart: cart,
             };
         case "DELETE_CART":
             const index2 = searchItem(action.data, cart)
-            if(index2 !== -1){
-                if(cart[index2].cant > 1){
-                    cart[index2].cant = cart[index2].cant -1 
-                }else{
+            if (index2 !== -1) {
+                if (cart[index2].cant > 1) {
+                    cart[index2].cant = cart[index2].cant - 1
+                } else {
                     cart.splice(index2, 1)
                 }
             }
             return {
                 cart: cart,
             };
+
+        case "BUY_CART":
+            cart.splice(0, cart.length)
+            return{
+                cart: cart
+            }
+
         default:
             return state;
     }
@@ -67,6 +74,7 @@ export const CartContextProvider = ({ children }) => {
     const [state, dispatch] = useReducer(CartReducer, INITIAL_STATE);
 
     useEffect(() => {
+        console.log(state.cart);
         localStorage.setItem("cart", JSON.stringify(state.cart));
     }, [state.cart]);
 

@@ -15,13 +15,13 @@ const Card = ({ item }) => {
     return (
         <Container onClick={() => clickCard(item._id)}>
             <div className='img'>
-                <img src={item.imagen} alt="" />
+                <img src={item.image.secure_url} alt="" />
             </div>
             <div className="content">
-                <h3>{item.nombre}</h3>
+                <h3>{item.name}</h3>
                 <div>
-                    <span>{item.categoria}</span>
-                    <p>{item.precio}$</p>
+                    <span>{item.category}</span>
+                    <p>{item.price}$</p>
                 </div>
             </div>
         </Container>
@@ -43,6 +43,11 @@ const Container = styled.div`
     .img{
         height: 200px;
         background-color: blue;
+        img{
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+        }
     }
 
     .content{
